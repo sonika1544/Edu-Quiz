@@ -1,0 +1,46 @@
+@model IEnumerable<EduQuiz_.Models.Course>
+
+@{
+    ViewData["Title"] = "Course Wise Subject Allocation";
+    Layout = "_AdminLayout";
+}
+
+@* <h2>Course Wise Subject Allocation</h2> *@
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Course Name</th>
+            <th>Allocated Subjects</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.CourseName</td>
+                <td>
+                    @if (course.CourseSubjects != null && course.CourseSubjects.Any())
+                    {
+                        <ul>
+                            @foreach (var cs in course.CourseSubjects)
+                            {
+                                <li>@cs.Subject?.Name</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <span>No subjects allocated</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="AssignSubjectsToCourse" asp-route-courseId="@course.Id" class="btn btn-primary btn-sm">
+                        Manage Subjects
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

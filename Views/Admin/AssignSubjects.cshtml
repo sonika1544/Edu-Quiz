@@ -1,0 +1,72 @@
+@model EduQuiz_.Models.Teacher
+
+@{
+    ViewData["Title"] = "Assign Subjects";
+    Layout = "_AdminLayout";
+    var subjects = ViewBag.Subjects as List<EduQuiz_.Models.Subject> ?? new List<EduQuiz_.Models.Subject>();
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Assign Subjects to @(Model?.FirstName ?? "") @(Model?.LastName ?? "")</h3>
+                </div>
+                <div class="card-body">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <form asp-action="AssignSubjects" method="post">
+                        <input type="hidden" asp-for="Id" />
+                        
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-info">
+                                    Select the subjects you want to assign to this teacher.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            @foreach (var subject in subjects)
+                            {
+                                var teacherSubjects = Model?.TeacherSubjects;
+                                var isAssigned = teacherSubjects != null && subject != null && 
+                                    teacherSubjects.Any(ts => ts != null && ts.SubjectId == subject.Id);
+                                
+                                <div class="col-md-4 mb-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" name="subjectIds" value="@subject?.Id" 
+                                               id="subject_@subject?.Id" @(isAssigned ? "checked" : "") />
+                                        <label class="form-check-label" for="subject_@subject?.Id">
+                                            @(subject?.Name ?? "")
+                                        </label>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="form-group text-center mt-4">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Save Assignments
+                            </button>
+                            <a href="@Url.Action("Teachers", "Admin")" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Back to Teachers
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+} 

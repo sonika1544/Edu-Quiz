@@ -1,0 +1,78 @@
+@model IEnumerable<EduQuiz_.Models.Teacher>
+@{
+    ViewData["Title"] = "Allocate Subjects to Teachers";
+     Layout = "_AdminLayout";
+}
+
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="mb-0">Allocate Subjects to Teachers</h3>
+                </div>
+                <div class="card-body">
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            @TempData["SuccessMessage"]
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    }
+
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Teacher</th>
+                                    <th>Assigned Subjects</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var teacher in Model ?? Enumerable.Empty<EduQuiz_.Models.Teacher>())
+                                {
+                                    <tr>
+                                        <td>@(teacher?.FirstName ?? "") @(teacher?.LastName ?? "")</td>
+                                        <td>
+                                            @{
+                                                var teacherSubjects = teacher?.TeacherSubjects;
+                                                if (teacherSubjects?.Any() == true)
+                                                {
+                                                    foreach (var ts in teacherSubjects)
+                                                    {
+                                                        var subject = ts?.Subject;
+                                                        if (subject != null)
+                                                        {
+                                                            <span class="badge bg-primary me-1">@subject.Name</span>
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <span class="text-muted">No subjects assigned</span>
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            <a asp-action="AssignSubjects" asp-route-id="@teacher?.Id" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-edit"></i> Assign Subjects
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-4">
+                        <a href="@Url.Action("Teachers", "Admin")" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Back to Teachers
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 

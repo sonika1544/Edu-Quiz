@@ -1,0 +1,63 @@
+<!-- Sidebar -->
+<div class="sidebar">
+    <div class="sidebar-header">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Admin Dashboard</span>
+    </div>
+    <ul class="sidebar-nav">
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")">
+            <a href="@Url.Action("Index", "Admin")">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Users" ? "active" : "")">
+            <a href="@Url.Action("Users", "Admin")">
+                <i class="fas fa-users"></i>
+                <span>Users</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Subjects" ? "active" : "")">
+            <a href="@Url.Action("Subjects", "Admin")">
+                <i class="fas fa-book"></i>
+                <span>Subjects</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Course" ? "active" : "")">
+            <a href="@Url.Action("Course", "Admin")">
+                <i class="fas fa-chalkboard-teacher"></i>
+                <span>Manage Course</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CourseWiseSubject" ? "active" : "")">
+            <a href="@Url.Action("CourseWiseSubject", "Admin")">
+                <i class="fas fa-book-reader"></i>
+                <span>Course-wise-Subject</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Students" ? "active" : "")">
+            <a href="@Url.Action("Students", "Admin")">
+                <i class="fas fa-user-graduate"></i>
+                <span>Manage Students</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "AllocateSubjects" ? "active" : "")">
+            <a href="@Url.Action("AllocateSubjects", "Admin")">
+                <i class="fas fa-tasks"></i>
+                <span>Allotment</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Quizzes" ? "active" : "")">
+            <a href="@Url.Action("Quizzes", "Admin")">
+                <i class="fas fa-question-circle"></i>
+                <span>Quizzes</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Settings" ? "active" : "")">
+            <a href="@Url.Action("Settings", "Admin")">
+                <i class="fas fa-cog"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+    </ul>
+</div> 

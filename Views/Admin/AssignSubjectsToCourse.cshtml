@@ -1,0 +1,52 @@
+@model EduQuiz_.Models.Course
+
+@{
+    ViewData["Title"] = "Assign Subjects to Course";
+    Layout = "_AdminLayout";
+}
+
+<h2>Assign Subjects to Course: @Model.CourseName</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+<h4>Allocated Subjects:</h4>
+@if (Model.CourseSubjects != null && Model.CourseSubjects.Any())
+{
+    <ul>
+        @foreach (var cs in Model.CourseSubjects)
+        {
+            <li>@cs.Subject?.Name</li>
+        }
+    </ul>
+}
+else
+{
+    <p>No subjects allocated yet.</p>
+}
+
+<form asp-action="AssignSubjectsToCourse" method="post">
+    <input type="hidden" asp-for="Id" name="courseId" />
+    <label for="subjectIds">Select Subjects:</label><br />
+    <select id="subjectIds" name="subjectIds" multiple size="10" style="width: 300px;">
+        @foreach (var subject in (IEnumerable<EduQuiz_.Models.Subject>)ViewBag.AllSubjects)
+        {
+            var isSelected = Model.CourseSubjects != null && Model.CourseSubjects.Any(cs => cs.SubjectId == subject.Id);
+            if (isSelected)
+            {
+                <option value="@subject.Id" selected>@subject.Name</option>
+            }
+            else
+            {
+                <option value="@subject.Id">@subject.Name</option>
+            }
+        }
+    </select>
+    <br /><br />
+    <button type="submit" class="btn btn-primary">Save Allocations</button>
+    <a href="@Url.Action("ManageCourse", "Admin")" class="btn btn-secondary">Back to Courses</a>
+</form>

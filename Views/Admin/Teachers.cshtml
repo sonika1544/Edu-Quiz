@@ -1,0 +1,158 @@
+@model IEnumerable<EduQuiz_.Models.Teacher>
+
+@{
+    ViewData["Title"] = "Manage Teachers";
+    Layout = "_AdminLayout";
+}
+
+
+<div class="card">
+    <div class="card-body">
+       
+        <h2>Manage Teachers</h2>
+        <a href="@Url.Action("AddTeacher", "Admin")" class="btn btn-primary">
+            <i class="fas fa-user-plus"></i> Add Teacher
+        </a>
+    </div>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["SuccessMessage"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["WarningMessage"] != null)
+    {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            @TempData["WarningMessage"]
+            @if (TempData["SetupLink"] != null)
+            {
+                <div class="mt-2">
+                    <strong>Setup Link:</strong>
+                    <div class="input-group">
+                        <input type="text" class="form-control" value="@TempData["SetupLink"]" readonly id="setupLink">
+                        <button class="btn btn-outline-secondary" type="button" onclick="copyToClipboard()">
+                            <i class="fas fa-copy"></i> Copy
+                        </button>
+                    </div>
+                </div>
+            }
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    @if (TempData["SetupLink"] != null)
+    {
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <p>Password setup link: <input type="text" id="setupLink" value="@TempData["SetupLink"]" readonly class="form-control" /></p>
+            <button type="button" class="btn btn-sm btn-secondary" onclick="copyToClipboard()">Copy Link</button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
+    <div class="card">
+        <div class="card-body">
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Status</th>
+                                <th>Subjects</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var teacher in Model)
+                            {
+                                <tr>
+                                    <td>@teacher.FirstName @teacher.LastName</td>
+                                    <td>@teacher.Email</td>
+                                    <td>
+                                        @if (teacher.IsActive)
+                                        {
+                                            <span class="badge bg-success">Active</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger">Inactive</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            var subjectCount = teacher.TeacherSubjects?.Count ?? 0;
+                                            if (subjectCount > 0)
+                                            {
+                                                <span class="badge bg-info">@subjectCount subject(s)</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge bg-secondary">No subjects</span>
+                                            }
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <a asp-action="EditTeacher" asp-route-id="@teacher.Id" class="btn btn-sm btn-primary">
+                                                <i class="fas fa-edit"></i> Edit
+                                            </a>
+                                            <a asp-action="ViewTeacherSubjects" asp-route-id="@teacher.Id" class="btn btn-sm btn-info">
+                                                <i class="fas fa-book"></i> Subjects
+                                            </a>
+                                            <form asp-action="DeleteTeacher" asp-route-id="@teacher.Id" method="post" class="d-inline">
+                                                @Html.AntiForgeryToken()
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this teacher?');">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    No teachers have been added yet.
+                </div>
+            }
+        </div>
+    </div>
+</div>
+@section Styles {
+    <style>
+        .card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .table {
+            margin-bottom: 0;
+        }
+
+        .btn-group {
+            gap: 0.5rem;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        function copyToClipboard() {
+            var copyText = document.getElementById("setupLink");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand("copy");
+            alert("Link copied to clipboard!");
+        }
+    </script>
+} 

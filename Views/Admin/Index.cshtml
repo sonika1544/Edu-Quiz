@@ -1,0 +1,159 @@
+@model dynamic
+@{
+    Layout = "_AdminLayout";
+    ViewData["Title"] = "Admin Dashboard";
+   
+}
+
+<!-- Statistics Cards -->
+<div class="stats-container">
+    <div class="stat-card">
+        <h3>Total Students</h3>
+        <p class="stat-number">@Model.Students</p>
+        <a href="@Url.Action("Students", "Admin")" class="view-details">View Details</a>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Teachers</h3>
+        <p class="stat-number">@Model.Teachers</p>
+        <a href="@Url.Action("Teachers", "Admin")" class="view-details">View Details</a>
+    </div>
+
+    <div class="stat-card">
+        <h3>Total Admins</h3>
+        <p class="stat-number">1</p>
+        <a href="#" class="view-details">View Details</a>
+    </div>
+</div>
+
+<!-- Activity and Status -->
+<div class="dashboard-widgets">
+    <div class="widget recent-activity">
+        <h3>Recent Activity</h3>
+        <ul>
+            <li><i class="fas fa-check-circle"></i> User JohnDoe completed Quiz 1</li>
+            <li><i class="fas fa-play-circle"></i> User JaneDoe started Quiz 2</li>
+            <li><i class="fas fa-user-plus"></i> New user registered: Alice</li>
+        </ul>
+    </div>
+
+    <div class="widget system-status">
+        <h3>System Status</h3>
+        <div class="status-bar">
+            <div class="progress">
+                <div class="progress-bar" style="width: 99%"></div>
+            </div>
+            <span>99% Uptime</span>
+        </div>
+        <p class="status-message">
+            <i class="fas fa-check-circle"></i>
+            All systems are operational.
+        </p>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        /* Statistics Cards */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-card h3 {
+            margin: 0;
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 1rem 0;
+            color: #2c3e50;
+        }
+
+        .view-details {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        /* Dashboard Widgets */
+        .dashboard-widgets {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .widget {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .widget h3 {
+            margin-top: 0;
+            margin-bottom: 1rem;
+            color: #2c3e50;
+        }
+
+        .recent-activity ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .recent-activity li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .recent-activity li:last-child {
+            border-bottom: none;
+        }
+
+        .status-bar {
+            margin-bottom: 1rem;
+        }
+
+        .progress {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: #28a745;
+        }
+
+        .status-message {
+            color: #28a745;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin: 0;
+        }
+    </style>
+} 

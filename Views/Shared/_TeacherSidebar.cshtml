@@ -1,0 +1,45 @@
+<!-- Teacher Sidebar -->
+<div class="sidebar" style="background: #2c3e50; color: white; padding-top: 1rem;">
+    <div class="sidebar-header" style="padding: 1rem; font-size: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 10px;">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Teacher Dashboard</span>
+    </div>
+    <ul class="sidebar-nav" style="list-style: none; padding: 0; margin: 0;">
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Index" ? "active" : "")" style="padding: 0.8rem 1rem; transition: background-color 0.3s;">
+            <a href="@Url.Action("Index", "Teacher")" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Students" ? "active" : "")" style="padding: 0.8rem 1rem; transition: background-color 0.3s;">
+            <a href="@Url.Action("Students", "Teacher")" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-users"></i>
+                <span>Students</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Quizzes" ? "active" : "")" style="padding: 0.8rem 1rem; transition: background-color 0.3s;">
+            <a href="@Url.Action("Quizzes", "Teacher")" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-question-circle"></i>
+                <span>Quizzes</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Units" ? "active" : "")" style="padding: 0.8rem 1rem; transition: background-color 0.3s;">
+            <a href="@Url.Action("Units", "Teacher")" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-book-reader"></i>
+                <span>Units</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "ManageQuestions" ? "active" : "")" style="padding: 0.8rem 1rem; transition: background-color 0.3s;">
+            <a href="@Url.Action("ManageQuestions", "Teacher")" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-plus-circle"></i>
+                <span>Questions</span>
+            </a>
+        </li>
+        <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "Materials" ? "active" : "")" style="padding: 0.8rem 1rem; transition: background-color 0.3s;">
+            <a href="@Url.Action("Materials", "Teacher")" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 10px;">
+                <i class="fas fa-folder-open"></i>
+                <span>Materials</span>
+            </a>
+        </li>
+    </ul>
+</div>
